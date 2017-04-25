@@ -11,8 +11,8 @@ public class UsuariosDalFijo implements UsuariosDAL {
 		this.usuario = usuario;
 	}
 
-	public boolean validar(Usuario usuarios) {
+	public boolean validar(Usuario usuario) {
 
-		return this.usuario.getNombre().equals(usuario.getNombre()) && this.usuario.getPass().equals(usuario.getPass());
+		return this.usuario.equals(usuario);
 	}
 }
