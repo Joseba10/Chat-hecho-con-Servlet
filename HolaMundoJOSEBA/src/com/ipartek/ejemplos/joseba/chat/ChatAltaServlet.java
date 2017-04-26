@@ -29,9 +29,10 @@ public class ChatAltaServlet extends HttpServlet {
 		response.setContentType("text/html");
 
 		out.println("<html>");
-
+		out.println("<head>");
+		out.println("<head>");
 		out.println("<body>");
-
+		out.println("<br>");
 		out.println("<a href='/chatver'>Al servidor</a>");
 
 		out.println("</body>");
