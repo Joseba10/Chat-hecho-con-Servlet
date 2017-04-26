@@ -22,6 +22,7 @@ public class HolaMundo extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/plain");
 		PrintWriter out = response.getWriter();
 		String nombre = request.getParameter("nombre"); /*
