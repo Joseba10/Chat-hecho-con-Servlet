@@ -16,13 +16,15 @@ public class ChatAltaServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String nombre = request.getParameter("nombre");
+		String nombre = request.getParameter("nombre"); // Coges el parametro del html
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(); // Creas una sesion
 
-		session.setAttribute("nombre", nombre);
+		session.setAttribute("nombre", nombre); // Introduces los datos que va a tener la
+												// sesion
 
-		PrintWriter out = response.getWriter();
+		PrintWriter out = response.getWriter(); // Asignas a la variable out la habilidad
+												// de escribir
 
 		out.println(nombre);
 

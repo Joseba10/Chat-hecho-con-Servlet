@@ -17,12 +17,15 @@ public class ChatVerServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(); // Creas la sesion
 
-		String nombre = (String) session.getAttribute("nombre");
+		String nombre = (String) session.getAttribute("nombre"); // Recoges el valor de la
+																	// sesion nombre,las
+																	// sesiones siempre
+																	// son las mismas
 
-		ServletContext application = getServletContext();
-		String texto = (String) application.getAttribute("texto");
+		ServletContext application = getServletContext(); // Creas un variables global
+		String texto = (String) application.getAttribute("texto"); // Recoges el valor
 
 		PrintWriter out = response.getWriter();
 
