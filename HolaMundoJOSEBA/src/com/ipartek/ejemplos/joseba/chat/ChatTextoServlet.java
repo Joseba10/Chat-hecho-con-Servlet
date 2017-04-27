@@ -23,12 +23,13 @@ public class ChatTextoServlet extends HttpServlet {
 		String texto = request.getParameter("texto"); // Coges el parametro del html
 
 		HttpSession session = request.getSession();// Creas una sesion
-		String nombre = (String) session.getAttribute("nombre");// Introduces los datos
+		String nombre = (String) session.getAttribute("nombre");// Recoges los datos
 																// que va a tener la
 		// sesion
 
 		ServletContext application = getServletContext(); // Defines la variable como
-															// global
+															// global,por lo que todos lo
+															// ven
 		String chat = (String) application.getAttribute("texto"); // le das un valor
 
 		if (chat == null) { // En caso de que la primera vez que reciba la informacion sea
