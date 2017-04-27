@@ -15,23 +15,47 @@ import javax.servlet.http.HttpSession;
 public class ChatVerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		HttpSession sessiontexto = request.getSession();
 
 		String nombre = (String) session.getAttribute("nombre");
-		String texto = (String) sessiontexto.getAttribute("texto");
+
+		ServletContext application = getServletContext();
+		String texto = (String) application.getAttribute("texto");
 
 		PrintWriter out = response.getWriter();
 
-		out.println(nombre + ": " + texto);
+		if (texto == null) {
 
-		ServletContext application = getServletContext();
-		String por_defecto = (String) application.getAttribute("nombre");
+			texto = "Empezando a chatear...";
+		}
 
-		out.println(por_defecto);
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<h1>El Chat</h1>");
+		out.println("<head>");
+		out.println("<body>");
+		out.println("<br>");
+
+		out.println("</body>");
+
+		out.println("</html>");
+		out.println(nombre + ": " + texto + "<br>");
+
+		response.setContentType("text/html");
+
+		out.println("<html>");
+		out.println("<head>");
+		out.println("<head>");
+		out.println("<body>");
+		out.println("<br>");
+		out.println("<a href='chattexto.html'>Escribir texto</a>");
+		out.println("<a href='chatalta.html'>Nuevo Usuario</a>");
+
+		out.println("</body>");
+
+		out.println("</html>");
 
 	}
-
 }

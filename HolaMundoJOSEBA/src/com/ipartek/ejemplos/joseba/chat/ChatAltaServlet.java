@@ -33,7 +33,7 @@ public class ChatAltaServlet extends HttpServlet {
 		out.println("<head>");
 		out.println("<body>");
 		out.println("<br>");
-		out.println("<a href='/chatver'>Al servidor</a>");
+		out.println("<a href='chatver'>Al servidor</a>");
 
 		out.println("</body>");
 
