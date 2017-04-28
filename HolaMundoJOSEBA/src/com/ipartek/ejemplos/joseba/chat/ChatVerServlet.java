@@ -55,6 +55,7 @@ public class ChatVerServlet extends HttpServlet {
 		out.println("<br>");
 		out.println("<a href='chattexto.html'>Escribir texto</a>");
 		out.println("<a href='chatalta.html'>Nuevo Usuario</a>");
+		out.println("<a href='baneado.html'>Banear todos</a>");
 
 		out.println("</body>");
 
