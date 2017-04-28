@@ -5,6 +5,10 @@ public class Usuario {
 	private String nombre;
 	private String pass;
 
+	public Usuario() {
+		this("anonimo", "pass");
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
