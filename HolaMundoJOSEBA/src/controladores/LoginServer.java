@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.ipartek.ejemplos.joseba.dal.UsuariosDAL;
 import com.ipartek.ejemplos.joseba.dal.UsuariosDalFijo;
@@ -15,6 +17,11 @@ import com.ipartek.ejemplos.joseba.tipos.Usuario;
 @WebServlet("/loginserver")
 public class LoginServer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
+	private static final String RUTA = "/WEB-INF/vistas/";
+	private static final String RUTA_PRINCIPAL = RUTA + "principal.jsp";
+	private static final String RUTA_LOGIN = RUTA + "login.jsp";
+	private static final int TIEMPO_INACTIVIDAD = 30 * 60;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -25,7 +32,7 @@ public class LoginServer extends HttpServlet {
 		// Recoger datos de vistas
 		String nombre = request.getParameter("nombre");
 		String pass = request.getParameter("pass");
-
+		String opcion = request.getParameter("opcion");
 		// Crear modelos en base a los datos
 		Usuario usuario = new Usuario();
 		usuario.setNombre(nombre);
@@ -36,25 +43,58 @@ public class LoginServer extends HttpServlet {
 
 		// Solo para crear una base de datos falsa con el contenido de un usuario
 		// "joseba","clemente"
-		usuarioDal.alta(new Usuario("joseba", "clemente"));
 
+		usuarioDal.alta(new Usuario("joseba", "clemente"));
+		HttpSession session = request.getSession();
+		session.setMaxInactiveInterval(TIEMPO_INACTIVIDAD);
+
+		// for (Cookie cookie : request.getCookies()) {
+		//
+		// if ("JSESSIONID".equals(cookie.getName())) {
+		//
+		// cookie.setMaxAge(TIEMPO_INACTIVIDAD);
+		// response.addCookie(cookie);
+		// }
+		// }
+
+		Cookie cookie = new Cookie("JSESSIONID", session.getId());
+		cookie.setMaxAge(TIEMPO_INACTIVIDAD);
+		response.addCookie(cookie);
+		// ESTADOS
 		boolean esValido = usuarioDal.validar(usuario);
 
+		boolean sinParametros = usuario.getNombre() == null;
+
+		boolean esUsuarioRegistrado = request.getSession().getAttribute("usuario") != null;
+
+		boolean quiereSalir = "logout".equals(opcion);
 		// Redirigir a una nueva vista
 
-		if (esValido) {
-			request.getSession().setAttribute("usuario", usuario);
+		if (quiereSalir) {
+			session.invalidate();
+			request.getRequestDispatcher(RUTA_LOGIN).forward(request, response);
+		}
+
+		else if (esUsuarioRegistrado) {
+			request.getRequestDispatcher(RUTA_PRINCIPAL).forward(request, response);
+		} else if (sinParametros) {
+			request.getRequestDispatcher(RUTA_LOGIN).forward(request, response);
+		}
+
+		else if (esValido) {
+			session.setAttribute("usuario", usuario);
 
 			// response.sendRedirect("principal.jsp");
-			request.getRequestDispatcher("/WEB-INF/principal.jsp").forward(request, response);
+			request.getRequestDispatcher(RUTA_PRINCIPAL).forward(request, response);
 		}
 
 		else {
 
 			usuario.setErrores("El usuario y contraseña introducidos no son validos");
 			request.setAttribute("usuario", usuario);
+
 			// lleva el contenido de usuario a la pagina login
-			request.getRequestDispatcher("login.jsp").forward(request, response);
+			request.getRequestDispatcher(RUTA_LOGIN).forward(request, response);
 		}
 	}
 }

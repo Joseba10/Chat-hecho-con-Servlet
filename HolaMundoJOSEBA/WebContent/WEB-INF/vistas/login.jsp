@@ -11,12 +11,12 @@
 <jsp:useBean id="usuario" scope="request"
  class="com.ipartek.ejemplos.joseba.tipos.Usuario" />
  
-	<form action="loginserver" method="get">
+	<form action="loginserver" method="post">
 	
 		<fieldset>
 
 			<label for="nombre">Nombre</label> 
-			<input id="nombre" name="nombre" value="${usuario.nombre}" }>
+			<input id="nombre" name="nombre" value="${usuario.nombre}" >
 
 		</fieldset>
 
