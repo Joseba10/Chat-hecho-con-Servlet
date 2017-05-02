@@ -45,7 +45,8 @@ public class LoginServer extends HttpServlet {
 		if (esValido) {
 			request.getSession().setAttribute("usuario", usuario);
 
-			response.sendRedirect("principal.jsp");
+			// response.sendRedirect("principal.jsp");
+			request.getRequestDispatcher("/WEB-INF/principal.jsp").forward(request, response);
 		}
 
 		else {
