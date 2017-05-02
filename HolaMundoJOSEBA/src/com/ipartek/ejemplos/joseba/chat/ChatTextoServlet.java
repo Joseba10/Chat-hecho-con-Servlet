@@ -25,7 +25,7 @@ public class ChatTextoServlet extends HttpServlet {
 		HttpSession session = request.getSession();// Creas una sesion
 		String nombre = (String) session.getAttribute("nombre");// Recoges los datos
 																// que va a tener la
-		// sesion
+																// sesion
 
 		ServletContext application = getServletContext(); // Defines la variable como
 															// global,por lo que todos lo

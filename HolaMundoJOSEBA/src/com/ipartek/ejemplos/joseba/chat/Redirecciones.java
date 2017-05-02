@@ -14,7 +14,9 @@ public class Redirecciones extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		// response.sendRedirect("http://www.google.es");
 		// response.sendRedirect("alta");
+		// Envias de un sitio a otro
 		getServletContext().getRequestDispatcher("/recibir").forward(request, response);
 	}
 
