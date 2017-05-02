@@ -5,15 +5,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Login</title>
+<link rel="stylesheet" type="text/css" href="css/estilos.css">
 </head>
 <body>
-
+<jsp:useBean id="usuario" scope="request"
+ class="com.ipartek.ejemplos.joseba.tipos.Usuario" />
+ 
 	<form action="loginserver" method="get">
 	
 		<fieldset>
 
 			<label for="nombre">Nombre</label> 
-			<input id="nombre" name="nombre">
+			<input id="nombre" name="nombre" value="${usuario.nombre}" }>
 
 		</fieldset>
 
@@ -26,6 +29,7 @@
 		<fieldset>
 
 			<input type="submit" value="Login">
+			<p class="errores">${usuario.errores }</p>
 
 		</fieldset>
 	</form>

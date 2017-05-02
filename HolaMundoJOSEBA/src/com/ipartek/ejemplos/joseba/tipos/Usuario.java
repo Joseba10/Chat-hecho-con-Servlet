@@ -4,6 +4,15 @@ public class Usuario {
 
 	private String nombre;
 	private String pass;
+	private String errores;
+
+	public String getErrores() {
+		return errores;
+	}
+
+	public void setErrores(String errores) {
+		this.errores = errores;
+	}
 
 	public Usuario() {
 		this("anonimo", "pass");
