@@ -1,0 +1,31 @@
+Modelo:
+
+	Clases(Objetos de Java,son POJOS Plain Old Java Objects)
+
+		Datos
+
+	
+Vista:	JSPs
+	
+		Visualizar informacion en pantalla
+		
+
+
+Controlador:
+
+	Servlets
+
+		Recoger datos de vistas
+			request.getParameter
+
+		Crear modelos en base a los datos
+			o= new Objeto()
+			o.setHora(xxx) //Ejemplo
+
+		Llamada a la logica de negocio
+			DEPENDE DE NUESTRA APLICACION
+			
+		Redirigir a una nueva vista
+
+			response.sendRedirect("...")
+			request.getRequestDispatcher("...").forward(request,response)
