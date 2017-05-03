@@ -31,7 +31,8 @@ public class AltaServlet extends HttpServlet {
 		String pass2 = request.getParameter("pass2");
 
 		// Inicio sin datos
-		// Datos incorrectos: sin rellenar,limite de caracteres,no coinciden contraseñas
+		// Datos incorrectos: sin rellenar,limite de caracteres,no coinciden
+		// contraseñas
 		// Las contraseñas deben de ser iguales
 		// Datos correctos: guardar
 		Usuario usuario = new Usuario(nombre, pass);
@@ -43,7 +44,7 @@ public class AltaServlet extends HttpServlet {
 
 			if (!datosCorrectos) {
 
-				usuario.setErrores("Todos los campos son requeridos y con un minimo " + LoginServer.NUMEROS_DE_CARACTERES + " caracteres");
+				usuario.setErrores("Todos los campos son requeridos y con un minimo " + LoginServer.MINIMO_DE_CARACTERES + " caracteres");
 				request.setAttribute("usuario", usuario);
 
 			} else if (!passIguales) {
@@ -67,6 +68,6 @@ public class AltaServlet extends HttpServlet {
 	}
 
 	private boolean validarCampo(String campo) {
-		return campo != null && campo.length() >= LoginServer.NUMEROS_DE_CARACTERES;
+		return campo != null && campo.length() >= LoginServer.MINIMO_DE_CARACTERES;
 	}
 }

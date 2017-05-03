@@ -22,7 +22,7 @@ public class LoginServer extends HttpServlet {
 	private static final String RUTA_PRINCIPAL = RUTA + "principal.jsp";
 	private static final String RUTA_LOGIN = RUTA + "login.jsp";
 	public static final int TIEMPO_INACTIVIDAD = 30 * 60;
-	/* Package */static final int NUMEROS_DE_CARACTERES = 4;
+	/* Package */static final int MINIMO_DE_CARACTERES = 4;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -42,7 +42,8 @@ public class LoginServer extends HttpServlet {
 		// Llamada a la logica de negocio
 		UsuariosDAL usuarioDal = new UsuariosDalFijo();
 
-		// Solo para crear una base de datos falsa con el contenido de un usuario
+		// Solo para crear una base de datos falsa con el contenido de un
+		// usuario
 		// "joseba","clemente"
 
 		HttpSession session = request.getSession();
@@ -69,9 +70,9 @@ public class LoginServer extends HttpServlet {
 
 		boolean quiereSalir = "logout".equals(opcion);
 
-		boolean nombreValido = usuario.getNombre() != null && usuario.getNombre().length() >= NUMEROS_DE_CARACTERES;
+		boolean nombreValido = usuario.getNombre() != null && usuario.getNombre().length() >= MINIMO_DE_CARACTERES;
 
-		boolean passValido = usuario.getPass() != null && usuario.getPass().length() >= NUMEROS_DE_CARACTERES;
+		boolean passValido = usuario.getPass() != null && usuario.getPass().length() >= MINIMO_DE_CARACTERES;
 
 		// Redirigir a una nueva vista
 
@@ -88,7 +89,7 @@ public class LoginServer extends HttpServlet {
 
 		else if (!nombreValido || !passValido) {
 
-			usuario.setErrores("El nombre y las pass deben tener como minimo " + NUMEROS_DE_CARACTERES + " y son ambos requeridos");
+			usuario.setErrores("El nombre y las pass deben tener como minimo " + MINIMO_DE_CARACTERES + " y son ambos requeridos");
 			request.setAttribute("usuario", usuario);
 			request.getRequestDispatcher(RUTA_LOGIN).forward(request, response);
 		}
