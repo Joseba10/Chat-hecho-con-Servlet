@@ -4,7 +4,7 @@
 <jsp:useBean id="usuario" scope="request"
  class="com.ipartek.ejemplos.joseba.tipos.Usuario" />
  	<%@ include file="includes/cabecera.jsp" %>
-	<form action="loginserver" method="post">
+	<form action="alta" method="post">
 	
 		<fieldset>
 
@@ -21,7 +21,13 @@
 		</fieldset>
 		<fieldset>
 
-			<input type="submit" value="Login">
+			<label for="pass2">Contraseña</label>
+			<input id="pass2" name="pass2" type="password">
+
+		</fieldset>
+		<fieldset>
+
+			<input type="submit" value="Alta">
 			<p class="errores">${usuario.errores }</p>
 
 		</fieldset>

@@ -18,10 +18,11 @@ import com.ipartek.ejemplos.joseba.tipos.Usuario;
 public class LoginServer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private static final String RUTA = "/WEB-INF/vistas/";
+	/* Package */static final String RUTA = "/WEB-INF/vistas/";
 	private static final String RUTA_PRINCIPAL = RUTA + "principal.jsp";
 	private static final String RUTA_LOGIN = RUTA + "login.jsp";
-	private static final int TIEMPO_INACTIVIDAD = 30 * 60;
+	public static final int TIEMPO_INACTIVIDAD = 30 * 60;
+	/* Package */static final int NUMEROS_DE_CARACTERES = 4;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
@@ -44,7 +45,6 @@ public class LoginServer extends HttpServlet {
 		// Solo para crear una base de datos falsa con el contenido de un usuario
 		// "joseba","clemente"
 
-		usuarioDal.alta(new Usuario("joseba", "clemente"));
 		HttpSession session = request.getSession();
 		session.setMaxInactiveInterval(TIEMPO_INACTIVIDAD);
 
@@ -68,6 +68,11 @@ public class LoginServer extends HttpServlet {
 		boolean esUsuarioRegistrado = request.getSession().getAttribute("usuario") != null;
 
 		boolean quiereSalir = "logout".equals(opcion);
+
+		boolean nombreValido = usuario.getNombre() != null && usuario.getNombre().length() >= NUMEROS_DE_CARACTERES;
+
+		boolean passValido = usuario.getPass() != null && usuario.getPass().length() >= NUMEROS_DE_CARACTERES;
+
 		// Redirigir a una nueva vista
 
 		if (quiereSalir) {
@@ -78,6 +83,13 @@ public class LoginServer extends HttpServlet {
 		else if (esUsuarioRegistrado) {
 			request.getRequestDispatcher(RUTA_PRINCIPAL).forward(request, response);
 		} else if (sinParametros) {
+			request.getRequestDispatcher(RUTA_LOGIN).forward(request, response);
+		}
+
+		else if (!nombreValido || !passValido) {
+
+			usuario.setErrores("El nombre y las pass deben tener como minimo " + NUMEROS_DE_CARACTERES + " y son ambos requeridos");
+			request.setAttribute("usuario", usuario);
 			request.getRequestDispatcher(RUTA_LOGIN).forward(request, response);
 		}
 

@@ -13,6 +13,6 @@ public class UsuariosDalFijo implements UsuariosDAL {
 
 	public boolean validar(Usuario usuario) {
 
-		return this.usuario.equals(usuario);
+		return this.usuario != null && this.equals(usuario);
 	}
 }

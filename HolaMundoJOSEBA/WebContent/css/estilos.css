@@ -24,3 +24,8 @@ input{
 	font-weight: bold;
 	font-variant: small-caps;
 }
+
+header,footer{
+	
+	background-color: lightgray;
+}
