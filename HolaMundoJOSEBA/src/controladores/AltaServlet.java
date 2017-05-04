@@ -35,6 +35,7 @@ public class AltaServlet extends HttpServlet {
 		// Las contraseñas deben de ser iguales
 		// Datos correctos: guardar
 		Usuario usuario = new Usuario(nombre, pass);
+
 		boolean hayDatos = nombre != null && pass != null && pass2 != null;
 		boolean datosCorrectos = validarCampo(nombre) && validarCampo(pass) && validarCampo(pass2);
 		boolean passIguales = pass != null && pass.equals(pass2);

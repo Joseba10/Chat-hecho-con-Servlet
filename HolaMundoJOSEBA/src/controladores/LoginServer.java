@@ -2,6 +2,7 @@ package controladores;
 
 import java.io.IOException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -40,7 +41,13 @@ public class LoginServer extends HttpServlet {
 		usuario.setPass(pass);
 
 		// Llamada a la logica de negocio
-		UsuariosDAL usuarioDal = new UsuariosDalFijo();
+		ServletContext application = request.getServletContext();
+		// Recoge datos
+		UsuariosDAL usuariosDAL = (UsuariosDAL) application.getAttribute(AltaServlet.USUARIO_DAL);
+		// Si no existe el dato se crea
+		if (usuariosDAL == null) {
+			usuariosDAL = new UsuariosDalFijo();
+		}
 
 		// Solo para crear una base de datos falsa con el contenido de un usuario
 		// "joseba","clemente"
@@ -61,7 +68,7 @@ public class LoginServer extends HttpServlet {
 		cookie.setMaxAge(TIEMPO_INACTIVIDAD);
 		response.addCookie(cookie);
 		// ESTADOS
-		boolean esValido = usuarioDal.validar(usuario);
+		boolean esValido = usuariosDAL.validar(usuario);
 
 		boolean sinParametros = usuario.getNombre() == null;
 
