@@ -5,7 +5,63 @@
  class="com.ipartek.ejemplos.joseba.tipos.Usuario" />
  	<%@ include file="includes/cabecera.jsp" %>
 	<form action="alta" method="post">
-	
+		
+<style>
+ 	
+ul{
+
+margin-left: 0px;
+margin-top: 0px;
+
+}
+
+li{
+background-color: #EFEFEF;
+width:100px;
+border:solid #EFEFEF;
+-webkit-border-radius: 19px;
+-moz-border-radius: 19px;
+border-radius: 19px;
+color:blue;
+text-align:center;
+display: inline-block;
+
+}
+
+li a:hover {
+	color:red;
+}
+
+li a{
+text-decoration: none;
+}
+
+fieldset{
+
+border: none;}
+
+form{
+
+
+margin-left: 530px;
+margin-top: 50px;}
+
+.errores{
+
+margin-top:20px;
+width: 200px;
+}
+
+
+
+
+
+</style>
+
+<ul>
+ 		<li><a href="/pruebas/loginserver">Login</a></li>
+ 		<li><a href="#">Alta</a></li>
+ 	</ul>
 		<fieldset>
 
 			<label for="nombre">Nombre</label> 

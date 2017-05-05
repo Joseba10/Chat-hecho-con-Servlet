@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ipartek.ejemplos.joseba.dal.DALException;
+import com.ipartek.ejemplos.joseba.dal.DalFactory;
 import com.ipartek.ejemplos.joseba.dal.UsuariosDAL;
-import com.ipartek.ejemplos.joseba.dal.UsuariosDalFijo;
 import com.ipartek.ejemplos.joseba.tipos.Usuario;
 
 @WebServlet("/alta")
@@ -57,9 +58,19 @@ public class AltaServlet extends HttpServlet {
 				UsuariosDAL usuariosDAL = (UsuariosDAL) application.getAttribute(USUARIO_DAL);
 				// Si no existe el dato se crea
 				if (usuariosDAL == null) {
-					usuariosDAL = new UsuariosDalFijo();
+					usuariosDAL = DalFactory.getUsuariosDAL();
 				}
-				usuariosDAL.alta(usuario);
+
+				try {
+					usuariosDAL.alta(usuario);
+
+				} catch (DALException de) {
+
+					usuario.setNombre("");
+					usuario.setErrores("Mete otro usuario");
+					request.setAttribute("usuario", usuario);
+				}
+
 				application.setAttribute(USUARIO_DAL, usuariosDAL);
 
 			}

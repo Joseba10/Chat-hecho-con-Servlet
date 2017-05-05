@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.ipartek.ejemplos.joseba.dal.DalFactory;
 import com.ipartek.ejemplos.joseba.dal.UsuariosDAL;
-import com.ipartek.ejemplos.joseba.dal.UsuariosDalFijo;
 import com.ipartek.ejemplos.joseba.tipos.Usuario;
 
 @WebServlet("/loginserver")
@@ -46,7 +46,7 @@ public class LoginServer extends HttpServlet {
 		UsuariosDAL usuariosDAL = (UsuariosDAL) application.getAttribute(AltaServlet.USUARIO_DAL);
 		// Si no existe el dato se crea
 		if (usuariosDAL == null) {
-			usuariosDAL = new UsuariosDalFijo();
+			usuariosDAL = DalFactory.getUsuariosDAL();
 		}
 
 		// Solo para crear una base de datos falsa con el contenido de un

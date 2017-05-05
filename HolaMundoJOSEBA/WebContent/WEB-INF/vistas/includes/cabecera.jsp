@@ -6,6 +6,14 @@
 
 <head>
 	
+	<style type="text/css">
+	
+	h1,p{
+	text-align: center;
+}
+	
+	
+	</style>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" type="text/css" href="css/estilos.css">
 	<title>Ejemplo MVC</title>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  	<%@ include file="includes/cabecera.jsp" %>
+ 	
 <h1>Principal</h1>
 <jsp:useBean id="usuario" scope="session"
  class="com.ipartek.ejemplos.joseba.tipos.Usuario" />

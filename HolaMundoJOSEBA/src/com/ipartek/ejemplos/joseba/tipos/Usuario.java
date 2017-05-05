@@ -15,7 +15,7 @@ public class Usuario {
 	}
 
 	public Usuario() {
-		this("anonimo", "pass");
+		this("", "");
 	}
 
 	public String getNombre() {
