@@ -9,33 +9,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ipartek.ejemplos.joseba.dal.DALException;
 import com.ipartek.ejemplos.joseba.dal.DalFactory;
+import com.ipartek.ejemplos.joseba.dal.UsuarioYaExiste;
 import com.ipartek.ejemplos.joseba.dal.UsuariosDAL;
 import com.ipartek.ejemplos.joseba.tipos.Usuario;
 
 @WebServlet("/alta")
 public class AltaServlet extends HttpServlet {
-	/* Package */static final String USUARIO_DAL = "usuariosDAL";
+	/* package */static final String USUARIOS_DAL = "dal";
+
 	private static final long serialVersionUID = 1L;
 
-	/* Package */static final String RUTA_ALTA = LoginServer.RUTA + "alta.jsp";
+	/* package */static final String RUTA_ALTA = LoginServer.RUTA + "alta.jsp";
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 		String nombre = request.getParameter("nombre");
 		String pass = request.getParameter("pass");
 		String pass2 = request.getParameter("pass2");
 
-		// Inicio sin datos
-		// Datos incorrectos: sin rellenar,limite de caracteres,no coinciden
-		// contraseñas
-		// Las contraseñas deben de ser iguales
+		// Inicio sin datos: mostrar formulario
+		// Datos incorrectos: sin rellenar, límite de caracteres, no coinciden contraseñas
+		// Las contraseñas deben ser iguales
 		// Datos correctos: guardar
+
 		Usuario usuario = new Usuario(nombre, pass);
 
 		boolean hayDatos = nombre != null && pass != null && pass2 != null;
@@ -43,38 +43,31 @@ public class AltaServlet extends HttpServlet {
 		boolean passIguales = pass != null && pass.equals(pass2);
 
 		if (hayDatos) {
-
 			if (!datosCorrectos) {
-
-				usuario.setErrores("Todos los campos son requeridos y con un minimo " + LoginServer.MINIMO_DE_CARACTERES + " caracteres");
+				usuario.setErrores("Todos los campos son requeridos y con un mínimo de " + LoginServer.MINIMO_DE_CARACTERES + " caracteres");
 				request.setAttribute("usuario", usuario);
-
 			} else if (!passIguales) {
-				usuario.setErrores("Las contraseñas deben de ser iguales");
+				usuario.setErrores("Las contraseñas deben ser iguales");
 				request.setAttribute("usuario", usuario);
 			} else {
 				ServletContext application = request.getServletContext();
-				// Recoge datos
-				UsuariosDAL usuariosDAL = (UsuariosDAL) application.getAttribute(USUARIO_DAL);
-				// Si no existe el dato se crea
+
+				UsuariosDAL usuariosDAL = (UsuariosDAL) application.getAttribute(USUARIOS_DAL);
+
 				if (usuariosDAL == null) {
 					usuariosDAL = DalFactory.getUsuariosDAL();
 				}
 
 				try {
 					usuariosDAL.alta(usuario);
-
-				} catch (DALException de) {
-
+				} catch (UsuarioYaExiste de) {
 					usuario.setNombre("");
-					usuario.setErrores("Mete otro usuario");
+					usuario.setErrores("El usuario ya existe. Elige otro");
 					request.setAttribute("usuario", usuario);
 				}
 
-				application.setAttribute(USUARIO_DAL, usuariosDAL);
-
+				application.setAttribute(USUARIOS_DAL, usuariosDAL);
 			}
-
 		}
 		request.getRequestDispatcher(RUTA_ALTA).forward(request, response);
 	}
@@ -82,4 +75,5 @@ public class AltaServlet extends HttpServlet {
 	private boolean validarCampo(String campo) {
 		return campo != null && campo.length() >= LoginServer.MINIMO_DE_CARACTERES;
 	}
+
 }

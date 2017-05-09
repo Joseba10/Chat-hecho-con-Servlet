@@ -34,12 +34,12 @@ public class UsuarioCrudServlet extends HttpServlet {
 																		// siempre coge el
 																		// mismo si entras
 																		// de nuevo
-
 		if (dal == null) {
-
 			dal = DalFactory.getUsuariosDAL();
+
 			dal.alta(new Usuario("usuario1", "pass1"));
 			dal.alta(new Usuario("usuario2", "pass2"));
+
 			application.setAttribute("dal", dal);
 		}
 
@@ -48,33 +48,24 @@ public class UsuarioCrudServlet extends HttpServlet {
 		if (op == null) {
 
 			Usuario[] usuarios = dal.buscarTodosLosUsuarios();
+
 			request.setAttribute("usuarios", usuarios);
+
 			request.getRequestDispatcher(RUTA_LISTADO).forward(request, response);
 		} else {
-
 			String id = request.getParameter("id");
+
 			Usuario usuario;
+
 			switch (op) {
-
-			case "alta":
-				request.getRequestDispatcher(RUTA_FORMULARIO).forward(request, response);
-				break;
 			case "modificar":
-				usuario = dal.buscarPorId(id);
-				request.setAttribute("usuario", usuario);
-				request.getRequestDispatcher(RUTA_FORMULARIO).forward(request, response);
-
-				break;
-
 			case "borrar":
 				usuario = dal.buscarPorId(id);
 				request.setAttribute("usuario", usuario);
+			case "alta":
 				request.getRequestDispatcher(RUTA_FORMULARIO).forward(request, response);
-
 				break;
-
 			default:
-
 				request.getRequestDispatcher(RUTA_LISTADO).forward(request, response);
 			}
 		}

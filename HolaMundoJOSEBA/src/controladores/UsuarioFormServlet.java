@@ -39,50 +39,51 @@ public class UsuarioFormServlet extends HttpServlet {
 		// out.println(pass2);
 
 		if (op == null) {
-			request.getRequestDispatcher(UsuarioCrudServlet.RUTA_LISTADO).forward(request, response);
+			rutaListado.forward(request, response);
 			return;
 		}
+
 		Usuario usuario = new Usuario(nombre, pass);
 
 		ServletContext application = request.getServletContext();
 		UsuariosDAL dal = (UsuariosDAL) application.getAttribute("dal");
-		switch (op) {
 
+		switch (op) {
 		case "alta":
 			if (pass.equals(pass2)) {
 				dal.alta(usuario);
-				request.getParameterMap().remove("op");
 				rutaListado.forward(request, response);
-
 			} else {
-
-				usuario.setErrores("Usuario no existente");
+				usuario.setErrores("Las contraseñas no coinciden");
 				request.setAttribute("usuario", usuario);
-				request.getRequestDispatcher(UsuarioCrudServlet.RUTA_FORMULARIO).forward(request, response);
+				rutaFormulario.forward(request, response);
 			}
+
+			break;
 		case "modificar":
 			if (pass.equals(pass2)) {
 				try {
 					dal.modificar(usuario);
 				} catch (DALException de) {
-
-					usuario.setErrores("Las contraseñas no coinciden");
+					usuario.setErrores(de.getMessage());
 					request.setAttribute("usuario", usuario);
 					rutaFormulario.forward(request, response);
-
+					return;
 				}
 				rutaListado.forward(request, response);
-
 			} else {
-
 				usuario.setErrores("Las contraseñas no coinciden");
 				request.setAttribute("usuario", usuario);
 				rutaFormulario.forward(request, response);
 			}
+
+			break;
 		case "borrar":
 			dal.borrar(usuario);
 			rutaListado.forward(request, response);
 
+			break;
 		}
 	}
+
 }

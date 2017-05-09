@@ -43,7 +43,7 @@ public class LoginServer extends HttpServlet {
 		// Llamada a la logica de negocio
 		ServletContext application = request.getServletContext();
 		// Recoge datos
-		UsuariosDAL usuariosDAL = (UsuariosDAL) application.getAttribute(AltaServlet.USUARIO_DAL);
+		UsuariosDAL usuariosDAL = (UsuariosDAL) application.getAttribute(AltaServlet.USUARIOS_DAL);
 		// Si no existe el dato se crea
 		if (usuariosDAL == null) {
 			usuariosDAL = DalFactory.getUsuariosDAL();
